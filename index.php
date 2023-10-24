@@ -1,18 +1,31 @@
 <?
-//добавление нового свойства
-       $arFields = Array(
-        "NAME" => "Новое свойство",
-        "IBLOCK_ID" => 1,
-        "ACTIVE" => "Y",
-        "USER_TYPE" => "HTML",
-        "SORT" => "100",
-        "CODE" => "MY_PROPERTY",
-        "PROPERTY_TYPE" => "L",
-        "MULTIPLE" => "Y",
-        "SEARCHABLE" => "N",
-        "FILTRABLE" => "N"
-        );
-      
-      $ibp = new CIBlockProperty;
-      $PropID = $ibp->Add($arFields);
+AddEventHandler("iblock", "OnIBlockPropertyBuildList", array("CIBlockPropertyExample", "GetUserTypeDescription"));
+class CIBlockPropertyExample
+{
+   static function GetUserTypeDescription()
+   {
+      return array(
+         "PROPERTY_TYPE"   =>"L",
+         "USER_TYPE"       =>"HEAD",
+         "DESCRIPTION"     =>"Заголовок",
+         //"GetPropertyFieldHtmlMulty" =>array("CIBlockPropertyExample", "GetPropertyFieldHtmlMulty"),
+         "GetPropertyFieldHtml" =>array("CIBlockPropertyExample", "GetPropertyFieldHtml"),
+         "GetPublicViewHTML" =>array("CIBlockPropertyExample", "GetPublicViewHTML"),
+         "MULTIPLE"        =>"Y",
+      );
+   }
+   static function GetPropertyFieldHtml ($arProperty, $value, $strHTMLControlName) 
+   {
+    
+      return '<input type="text" name="'.$strHTMLControlName["VALUE"].'" value="'.$value['VALUE'].'">';
+   }
+
+   static function GetPublicViewHTML($arProperty, $value, $strHTMLControlName)
+   {
+      if(strlen($value["VALUE"])>0)
+         return $strHTMLControlName["DESCRIPTION"].' '.$value["VALUE"];
+      else
+         return '';
+   }
+}
 ?>
