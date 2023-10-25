@@ -16,16 +16,13 @@ class CIBlockPropertyExample
    }
    static function GetPropertyFieldHtml ($arProperty, $value, $strHTMLControlName) 
    {
-    
-      return '<input type="text" name="'.$strHTMLControlName["VALUE"].'" value="'.$value['VALUE'].'">';
+      return '<input type="text" name="'.$strHTMLControlName["VALUE"].'" value="'.$value["VALUE"].'"><br><textarea name="'.$strHTMLControlName["DESCRIPTION"].'">'.$value["DESCRIPTION"].'</textarea>';
    }
 
    static function GetPublicViewHTML($arProperty, $value, $strHTMLControlName)
    {
-      if(strlen($value["VALUE"])>0)
-         return $strHTMLControlName["DESCRIPTION"].' '.$value["VALUE"];
-      else
-         return '';
+         return $arProperty["VALUE"].', '.$arProperty["DESCRIPTION"];
+
    }
 }
 ?>
